@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS-CR Galería</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans">
+
+<!-- CURSOR LIGHT -->
+<div id="cursorLight"></div>
+
+<script>
+// ESPERAR A QUE TODO CARGUE
+window.addEventListener("load", () => {
+
+  // PARTÍCULAS
+  const canvas = document.getElementById("particles");
+  if(canvas){
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    for(let i=0;i<60;i++){
+      particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        size:Math.random()*2
+      });
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p=>{
+        p.y+=0.3;
+        if(p.y>canvas.height) p.y=0;
+        ctx.fillStyle="rgba(255,255,255,0.2)";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.size,0,6.28);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  // CURSOR LIGHT
+  const light = document.getElementById("cursorLight");
+  document.addEventListener("mousemove",(e)=>{
+    light.style.left = e.clientX - 150 + "px";
+    light.style.top = e.clientY - 150 + "px";
+  });
+
+  // PARALLAX (DESKTOP + MOBILE)
+  function moveElements(x, y){
+    document.querySelectorAll(".float-item").forEach((el,i)=>{
+      const speed = (i+1)*0.01;
+      el.style.transform = `translate(${x*speed}px, ${y*speed}px)`;
+    });
+  }
+
+  // DESKTOP
+  document.addEventListener("mousemove",(e)=>{
+    moveElements(e.clientX - window.innerWidth/2, e.clientY - window.innerHeight/2);
+  });
+
+  // MOBILE (TOUCH)
+  document.addEventListener("touchmove",(e)=>{
+    const touch = e.touches[0];
+    moveElements(touch.clientX - window.innerWidth/2, touch.clientY - window.innerHeight/2);
+  });
+
+});
+</script>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const cineText = document.getElementById("cineText");
+  if (!cineText) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        cineText.classList.remove("opacity-0", "translate-y-10", "blur-sm");
+        cineText.classList.add("opacity-100", "translate-y-0", "blur-0");
+
+        const author = cineText.querySelector("div");
+        if (author) {
+          author.classList.remove("opacity-0", "translate-y-4");
+          author.classList.add("opacity-100", "translate-y-0");
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  observer.observe(cineText);
+});
+</script>
+
+<!-- HEADER PRO MAX -->
+<header id="header" class="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+  <div id="headerInner" class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4 rounded-b-2xl bg-[#020617]/90 backdrop-blur-xl border-b border-white/10 shadow-lg">
+    
+    <!-- LOGO -->
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <div class="relative w-12 h-12 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full bg-cyan-400 blur-lg opacity-50 group-hover:opacity-80 transition duration-500"></div>
+        <img src="./img/logo.png" alt="DNS-CR Logo" class="w-12 h-12 rounded-full shadow-xl object-cover transform transition duration-500 group-hover:scale-110 group-hover:rotate-12">
+      </div>
+      <h1 class="text-2xl font-bold tracking-wider text-cyan-400 transition duration-300 group-hover:text-blue-400">DNS-CR</h1>
+    </div>
+
+    <!-- NAV DESKTOP -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+      <a href="#inicio" class="nav-link">Inicio</a>
+      <a href="#info" class="nav-link">Información</a>
+      <a href="#oleo" class="nav-link">Óleo</a>
+      <a href="#acrilico" class="nav-link">Acrílico</a>
+    </nav>
+
+    <!-- CTA + MENU BTN -->
+    <div class="flex items-center gap-4">
+      <a href="#acrilico" class="hidden md:inline-block px-4 py-2 rounded-full bg-blue-600 text-white font-semibold shadow-lg hover:scale-105 hover:bg-cyan-400 hover:text-black transition">Explorar</a>
+      <button id="menuBtn" class="md:hidden text-white text-2xl focus:outline-none">☰</button>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="hidden flex-col bg-[#020617]/95 backdrop-blur-xl text-center py-6 space-y-6 md:hidden border-b border-white/10">
+    <a href="#inicio" class="block text-gray-200 hover:text-cyan-400">Inicio</a>
+    <a href="#info" class="block text-gray-200 hover:text-cyan-400">Información</a>
+    <a href="#oleo" class="block text-gray-200 hover:text-cyan-400">Óleo</a>
+    <a href="#acrilico" class="block text-gray-200 hover:text-cyan-400">Acrílico</a>
+  </div>
+</header>
+
+<style>
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  background: #020617;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+section {
+  padding: 100px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+section + section {
+  margin-top: 120px;
+}
+
+h1, h2, h3 {
+  color: #22d3ee;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.gold-text {
+  color: #22d3ee;
+}
+
+.navbar {
+  background: #020617;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.navbar a {
+  color: #e5e7eb;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #22d3ee;
+}
+
+.btn-premium {
+  background: #3b82f6;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 12px;
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-premium:hover {
+  background: #22d3ee;
+  color: black;
+  transform: scale(1.05);
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(34,211,238,0.15);
+}
+  
+/* CONTENEDOR */
+#slider {
+  scrollbar-width: none;
+}
+#slider::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  #slider {
+    justify-content: center;
+  }
+}
+
+/* REMOVE DUPLICATE STYLES */
+/* Removing duplicate #particles, .float-item, #cursorLight definitions */
+
+/* CARD PRO */
+.netflix-card {
+  min-width: 240px;
+  height: 340px;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+/* IMAGEN */
+.netflix-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+/* HOVER NIVEL NETFLIX */
+.netflix-card:hover {
+  transform: scale(1.25);
+  z-index: 20;
+}
+
+.netflix-card:hover img {
+  filter: brightness(0.4);
+}
+
+/* INFO OVERLAY */
+.netflix-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.4s;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+.netflix-card:hover .netflix-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.netflix-info h4 {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+    /* FLOAT */
+    /* FIX RESPONSIVE GENERAL */
+/* CANVAS - FIXED POSITIONING */
+
+/* ICONOS RESPONSIVE */
+@media (max-width: 768px) {
+  .float-item {
+    opacity: 0.08;
+    width: 30px !important;
+  }
+}
+
+/* OCULTAR EFECTOS PESADOS EN MÓVIL */
+@media (max-width: 640px) {
+  #cursorLight {
+    display: none;
+  }
+}
+.float-item {
+  position: absolute;
+  opacity: 0.15;
+  animation: float 6s ease-in-out infinite;
+  max-width: 40px;
+  min-width: 40px;
+  overflow: hidden;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+/* CURSOR LIGHT */
+#cursorLight {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.25), transparent 70%);
+  mix-blend-mode: screen;
+  z-index: 40;
+}
+
+/* ENERGÍA VIDEO */
+.energy-ring {
+  border-radius: 20px;
+  background: linear-gradient(120deg, transparent, rgba(59,130,246,0.6), transparent);
+  filter: blur(20px);
+  animation: energyMove 4s linear infinite;
+}
+
+@keyframes energyMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* CANVAS PARTICLES */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.nav-link {
+  position: relative;
+  color: #e5e7eb;
+  transition: 0.3s;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #22d3ee;
+  transition: 0.4s;
+}
+.nav-link:hover {
+  color: #22d3ee;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.active {
+  color: #22d3ee;
+}
+.active::after {
+  width: 100%;
+}
+
+/* CSS NIVEL DIOS - CARD EFECTOS PRO */
+.card-dios {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 32px;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.card-dios::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(0,255,255,0.15), transparent);
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.card-dios:hover::before {
+  opacity: 1;
+}
+
+.card-dios:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(0, 255, 255, 0.3);
+}
+
+/* Animacion reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SEPARACIÓN ENTRE SECCIONES */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+section + section {
+  margin-top: 120px;
+}
+
+#tecnicas-oleo {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 120px;
+}
+
+#adn-section,
+#info {
+  position: relative;
+  z-index: 10;
+  padding-top: 120px;
+}
+
+/* GRID PARA GALERÍAS */
+.grid-arte {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* IMAGES - REMOVE ABSOLUTE POSITIONING */
+.grid-arte img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+</style>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const header = document.getElementById('headerInner');
+const links = document.querySelectorAll('.nav-link');
+
+menuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('hidden');
+});
+
+// SCROLL EFFECT (glass + shrink)
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.classList.add('py-2','shadow-2xl');
+  } else {
+    header.classList.remove('py-2','shadow-2xl');
+  }
+});
+
+// ACTIVE LINK DETECTION
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  links.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href').includes(current)) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let particles = [];
+
+for(let i = 0; i < 80; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2,
+    speedX: (Math.random() - 0.5) * 0.5,
+    speedY: (Math.random() - 0.5) * 0.5
+  });
+}
+
+function animateParticles(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+    ctx.fillStyle = "rgba(255,255,255,0.2)";
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+</script>
+<!-- ICONOS FLOTANTES -->
+<div class="pointer-events-none z-0" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
+  <img src="./img/arte.png" class="float-item w-12 top-20 left-10">
+  <img src="./img/arte-urbano.png" class="float-item w-14 top-40 right-20">
+  <img src="./img/artista.png" class="float-item w-10 bottom-32 left-20">
+  <img src="./img/pintar.png" class="float-item w-16 bottom-20 right-10">
+</div>
+<section id="inicio" class="relative min-h-screen flex items-center justify-center px-6 pt-32">
+
+  <!-- FONDO PREMIUM -->
+  <div class="absolute inset-0 -z-10 bg-gradient-to-br from-gray-950 via-gray-900 to-black"></div>
+  <div class="absolute inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_20%_30%,#3b82f6,transparent_40%),radial-gradient(circle_at_80%_70%,#8b5cf6,transparent_40%)]"></div>
+
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+    <!-- TEXTO -->
+    <div class="space-y-6">
+      <h2 class="text-5xl md:text-7xl font-extrabold leading-tight text-white">
+        DNS-CR Arte que <br>
+        <span id="typing" class="text-cyan-400"></span>
+      </h2>
+
+      <p class="text-gray-300 text-lg max-w-xl">
+      La galería virtual de arte DNS-CR promovida por los estudiantes Dianis Isabel Angulo Pallares y Ciro Alfonso Ramos Córdoba estudiantes de la universidad popular del cesar es un espacio académico y creativo dedicado a la difusión de las obras producidas por nuestros estudiantes. Este entorno digital reúne propuestas plásticas desarrolladas en diversos cursos y líneas de formación, permitiendo apreciar sus procesos estéticos, técnicos y conceptuales. Su propósito es visibilizar el talento emergente de la región y fortalecer la proyección artística de la facultad de bellas artes mediante una plataforma accesible, dinámica y abierta al público
+
+      <!-- REDES SOCIALES -->
+      <div class="flex gap-6 pt-4">
+        <a href="https://www.facebook.com/share/1RSdJitsMB/?mibextid=wwXIfr" target="_blank" class="group">
+          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/10 hover:bg-blue-500 transition duration-300 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white group-hover:text-black" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 5.01 3.657 9.164 8.438 9.879v-6.988H7.898v-2.891h2.54V9.845c0-2.506 1.493-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.877h2.773l-.443 2.89h-2.33v6.988C18.343 21.164 22 17.01 22 12z"/>
+            </svg>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/dns.cr_?igsh=MXF4Z3JkOHpwenJscQ%3D%3D&utm_source=qr" target="_blank" class="group">
+          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/10 hover:bg-pink-500 transition duration-300 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white group-hover:text-black" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7.75 2C4.678 2 2 4.678 2 7.75v8.5C2 19.322 4.678 22 7.75 22h8.5C19.322 22 22 19.322 22 16.25v-8.5C22 4.678 19.322 2 16.25 2h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm6.5-.25a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="flex gap-4 pt-4">
+        <a href="#oleo" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:scale-110 hover:shadow-cyan-400/50 hover:bg-cyan-400 hover:text-black transition duration-300">Explorar</a>
+        <a href="#info" class="px-6 py-3 border border-white/20 text-white rounded-full hover:bg-white hover:text-black transition">Más info</a>
+      </div>
+    </div>
+
+    <!-- VIDEO PRO -->
+    <div class="relative group max-w-lg">
+      <div class="absolute inset-0 bg-blue-500 blur-3xl opacity-30 group-hover:opacity-60 transition duration-500 rounded-2xl"></div>
+
+      <div class="relative overflow-hidden rounded-2xl shadow-2xl border border-white/10 max-h-96">
+        <video id="video" class="w-full h-full object-cover" loop>
+          <source src="./img/Video tipo fondo para el apartado de inicio .mp4" type="video/mp4">
+        </video>
+
+        <!-- OVERLAY TEXTO -->
+        <div class="absolute inset-0 bg-black/40 flex items-end p-6">
+          <p class="text-white text-sm opacity-80"></p>
+        </div>
+
+        <!-- PLAY/PAUSE BTN -->
+        <button id="playBtn" class="absolute inset-0 flex items-center justify-center z-10">
+          <div id="playBtnIcon" class="w-20 h-20 bg-white/20 backdrop-blur-lg rounded-full flex items-center justify-center text-3xl text-white hover:scale-110 transition hover:bg-white/30">▶</div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+// TYPING
+const text = ["inspira", "emociona", "trasciende"];
+let count = 0;
+let index = 0;
+let currentText = '';
+let letter = '';
+(function type(){
+  if(count === text.length){ count = 0; }
+  currentText = text[count];
+  letter = currentText.slice(0, ++index);
+  document.getElementById('typing').textContent = letter;
+  if(letter.length === currentText.length){ count++; index = 0; setTimeout(type, 1200); }
+  else { setTimeout(type, 80); }
+})();
+
+// VIDEO CONTROL
+const video = document.getElementById('video');
+const playBtn = document.getElementById('playBtn');
+const playBtnIcon = document.getElementById('playBtnIcon');
+
+playBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (video.paused) {
+    video.play();
+    playBtnIcon.textContent = '⏸';
+  } else {
+    video.pause();
+    playBtnIcon.textContent = '▶';
+  }
+});
+
+// Actualizar icono cuando el video cambia de estado
+video.addEventListener('play', () => {
+  playBtnIcon.textContent = '⏸';
+});
+
+video.addEventListener('pause', () => {
+  playBtnIcon.textContent = '▶';
+});
+</script>
+
+<script>
+window.addEventListener("load", () => {
+  const cineText = document.getElementById("cineText");
+
+  setTimeout(() => {
+    cineText.classList.remove("opacity-0","translate-y-10");
+    cineText.classList.add("opacity-100","translate-y-0");
+
+    // activar autor
+    const author = cineText.querySelector("div");
+    author.classList.remove("opacity-0","translate-y-4");
+    author.classList.add("opacity-100","translate-y-0");
+  }, 300);
+});
+</script>
+<!-- CANVAS PARTICLES -->
+<canvas id="particles"></canvas>
+
+<!-- GALERÍA NIVEL DIOS -->
+<section id="oleo" class="mt-24 max-w-7xl mx-auto px-6" style="margin-bottom: 120px;">
+  <h3 class="text-4xl font-bold mb-12 text-center text-white">TÉCNICAS AL ÓLEO </h3>
+  <div class="mt-16 flex justify-center text-center overflow-hidden">
+
+  <h3 id="cineText" class="relative text-2xl md:text-3xl font-semibold max-w-3xl leading-relaxed text-gray-200 opacity-0 translate-y-10 transition-all duration-1000 ease-out group cursor-pointer">
+
+    <!-- COMILLAS -->
+    <span class="absolute -left-4 top-0 text-6xl text-blue-500 opacity-20 group-hover:opacity-40 transition duration-500">“</span>
+
+    <!-- TEXTO -->
+    <span class="relative z-10 group-hover:text-white transition duration-500">
+      El color a óleo está constituido por pigmento en polvo mezclados con aceites vegetales a base de semillas de linaza, amapola o nuez.
+    </span>
+
+    <!-- COMILLA FINAL -->
+    <span class="absolute -right-2 bottom-0 text-6xl text-blue-500 opacity-20 group-hover:opacity-40 transition duration-500">”</span>
+
+    <!-- AUTOR -->
+    <div class="mt-4 text-sm text-cyan-400 opacity-0 translate-y-4 transition-all duration-700 delay-300">
+      — Adgblog (2010)
+    </div>
+
+    <!-- LÍNEA ANIMADA -->
+    <div class="absolute bottom-0 left-1/2 w-0 h-[2px] bg-cyan-400 transition-all duration-700 group-hover:w-full group-hover:left-0"></div>
+
+  </h3>
+
+</div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-[10px]">
+
+    <div class="card" data-index="0">
+      <img src="./img/imagen 1.jpg" class="card-img">
+    </div>
+
+    <div class="card" data-index="1">
+      <img src="./img/imagen 2.jpg" class="card-img">
+    </div>
+
+    <div class="card" data-index="2">
+      <img src="./img/imagen 3.png" class="card-img">
+    </div>
+
+    <div class="card" data-index="3">
+      <img src="./img/imagen 4.jpg" class="card-img">
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL DIOS -->
+<div id="modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden z-50 flex items-center justify-center" onclick="closeModal()">
+
+  <div class="relative max-w-5xl w-full grid md:grid-cols-2 bg-gradient-to-br from-[#0f172a] to-[#020617] rounded-2xl overflow-hidden border border-cyan-400/30 shadow-2xl shadow-cyan-400/20" onclick="event.stopPropagation()">
+
+    <!-- IMAGEN ZOOM -->
+    <div class="overflow-hidden relative">
+      <img id="modalImg" class="w-full h-full object-cover transition duration-300">
+    </div>
+
+    <!-- INFO -->
+    <div class="p-8 flex flex-col justify-center">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-2xl hover:text-cyan-400 transition duration-300">✕</button>
+
+      <h3 id="modalTitle" class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent"></h3>
+      <p id="modalDesc" class="text-gray-300 mb-6 leading-relaxed text-base"></p>
+
+      <p class="text-cyan-400 font-semibold mb-2"><span class="text-gray-400">Autor:</span> <span id="modalAuthor" class="text-gray-200"></span></p>
+      <p class="text-gray-500 text-sm mb-3">Óleo sobre lienzo</p>
+      <p id="modalInsta" class="text-blue-400 mt-3 text-sm italic"></p>
+
+      <!-- BOTONES -->
+      <div class="flex gap-4 mt-8 pt-4 border-t border-white/10">
+        <button onclick="prevOleo()" class="px-5 py-2 bg-gradient-to-r from-cyan-400/30 to-blue-600/30 border border-cyan-400/50 text-cyan-400 rounded-lg hover:from-cyan-400/50 hover:to-blue-600/50 transition duration-300 font-semibold">⬅ Anterior</button>
+        <button onclick="nextOleo()" class="px-5 py-2 bg-gradient-to-r from-blue-600/30 to-cyan-400/30 border border-blue-400/50 text-blue-400 rounded-lg hover:from-blue-600/50 hover:to-cyan-400/50 transition duration-300 font-semibold">Siguiente ➡</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.card {
+  perspective: 1000px;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  height: 320px;
+  border-radius: 20px;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+/* EFECTO 3D REAL */
+.card:hover .card-img {
+  transform: scale(1.05);
+}
+</style>
+
+<script>
+const cards = document.querySelectorAll('.card');
+
+cards.forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = -(y - centerY) / 20;
+    const rotateY = (x - centerX) / 20;
+
+    card.querySelector('img').style.transform =
+      `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.querySelector('img').style.transform = "rotateX(0) rotateY(0) scale(1)";
+  });
+
+  card.addEventListener('click', () => {
+    current = parseInt(card.dataset.index);
+    openModal(current);
+  });
+});
+
+const data = [
+  {
+    img: "./img/imagen 1.jpg",
+    title: "Penumbra",
+    desc: "Obra nacida de la oscuridad emocional donde surge la esperanza.",
+    author: "Iván Arias",
+    insta: "@ivart_75"
+  },
+  {
+    img: "./img/imagen 2.jpg",
+    title: "Ironía de la humanización",
+    desc: "Reflexión sobre identidad y roles humanos.",
+    author: "Fabián Gómez Rojas",
+    insta: "fabian_gomez_rojas"
+  },
+  {
+    img: "./img/imagen 3.png",
+    title: "Cayena",
+    desc: "Rojo profundo que evoca la naturaleza.",
+    author: "Wendy Echeverría",
+    insta: "wexd.yart"
+  },
+  {
+    img: "./img/imagen 4.jpg",
+    title: "Más allá",
+    desc: "Exploración artística del retrato.",
+    author: "Natalia Orozco",
+    insta: ""
+  }
+];
+
+let current = 0;
+
+function openModal(i){
+  document.getElementById("modal").classList.remove("hidden");
+  updateModal(i);
+}
+
+function closeModal(){
+  const acrylic = document.getElementById("modalAcrilico");
+  if (acrylic && !acrylic.classList.contains("hidden")) {
+    acrylic.classList.add("hidden");
+    document.body.style.overflow = "";
+    return;
+  }
+  document.getElementById("modal").classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+function updateModal(i){
+  current = i;
+  document.getElementById("modalImg").src = data[i].img;
+  document.getElementById("modalTitle").textContent = data[i].title;
+  document.getElementById("modalDesc").textContent = data[i].desc;
+  document.getElementById("modalAuthor").textContent = data[i].author;
+  document.getElementById("modalInsta").textContent = data[i].insta;
+}
+
+function nextOleo(){
+  current = (current + 1) % data.length;
+  updateModal(current);
+}
+
+function prevOleo(){
+  current = (current - 1 + data.length) % data.length;
+  updateModal(current);
+}
+
+/* ZOOM TIPO LUPA */
+const modalImg = document.getElementById("modalImg");
+
+modalImg.addEventListener("mousemove", e => {
+  const rect = modalImg.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width * 100;
+  const y = (e.clientY - rect.top) / rect.height * 100;
+
+  modalImg.style.transformOrigin = `${x}% ${y}%`;
+  modalImg.style.transform = "scale(2)";
+});
+
+modalImg.addEventListener("mouseleave", () => {
+  modalImg.style.transform = "scale(1)";
+});
+</script>
+
+<section class="relative py-32 px-6 bg-[#020617] overflow-hidden">
+
+  <!-- Fondo dinámico -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute w-[600px] h-[600px] bg-cyan-500/10 blur-[140px] top-[-100px] left-[-100px] animate-pulse"></div>
+    <div class="absolute w-[500px] h-[500px] bg-blue-500/10 blur-[120px] bottom-[-100px] right-[-100px] animate-pulse"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-24">
+      <h2 class="text-5xl md:text-6xl font-bold text-white mb-6">
+        ADN de <span class="text-cyan-400">DNS-CR</span>
+      </h2>
+
+      <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+        Más que una galería, una plataforma que impulsa el talento artístico hacia nuevas dimensiones.
+      </p>
+    </div>
+
+    <!-- Timeline vertical -->
+    <div class="relative">
+
+      <!-- Línea central -->
+      <div class="hidden md:block absolute left-1/2 top-0 w-[2px] h-full bg-gradient-to-b from-cyan-400/20 via-blue-400/40 to-transparent"></div>
+
+      <!-- ITEM MISIÓN -->
+      <div class="relative md:flex items-center mb-32">
+
+        <!-- Punto -->
+        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"></div>
+
+        <!-- Card -->
+        <div class="md:w-1/2 md:pr-12 reveal">
+          <div class="card-dios">
+
+            <h3 class="text-2xl font-bold text-cyan-400 mb-4">
+              Misión
+            </h3>
+
+            <p class="text-gray-300 leading-relaxed text-justify">
+              DNS-CR es una galería virtual de arte que busca promover y difundir el talento artístico de los estudiantes de la Facultad de Bellas Artes, ofreciendo un espacio virtual para que sus obras sean conocidas y apreciadas por un público más amplio. Con el objetivo de fomentar las competencias y habilidades artísticas, contribuyendo al desarrollo artístico plástico de los estudiantes.
+            </p>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ITEM VISIÓN -->
+      <div class="relative md:flex items-center justify-end">
+
+        <!-- Punto -->
+        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"></div>
+
+        <!-- Card -->
+        <div class="md:w-1/2 md:pl-12 reveal">
+          <div class="card-dios">
+
+            <h3 class="text-2xl font-bold text-blue-400 mb-4">
+              Visión
+            </h3>
+
+            <p class="text-gray-300 leading-relaxed text-justify">
+              Ser una galería virtual reconocida por su calidad, diversidad y compromiso con la difusión del arte. DNS-CR espera ser una herramienta que inspire y motive a nuevos artistas a desarrollar su creatividad y compartir su visión del mundo artístico con el público, ofreciendo además un espacio para comercializar sus obras y fomentar el emprendimiento artístico.
+            </p>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<section id="acrilico" class="mt-10 px-6 relative z-10">
+
+  <!-- CONTENEDOR -->
+<div class="w-full flex flex-col items-center justify-center text-center px-6 py-8 relative">
+
+  <!-- EFECTO DE FONDO -->
+  <div class="absolute w-[500px] h-[500px] bg-blue-500/20 blur-[120px] rounded-full top-10 animate-pulse"></div>
+
+  <!-- TÍTULO -->
+  <h2 class="relative text-5xl md:text-6xl font-extrabold mb-6 
+             bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-600 
+             text-transparent bg-clip-text 
+             tracking-wide 
+             animate-fadeIn">
+
+    TÉCNICAS EN ACRÍLICO
+
+    <!-- Línea decorativa -->
+    <span class="block mx-auto mt-4 w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full animate-pulse"></span>
+  </h2>
+
+  <!-- CITA -->
+  <p class="relative text-gray-300 italic max-w-3xl text-lg md:text-xl leading-relaxed 
+            backdrop-blur-md bg-white/5 border border-white/10 
+            rounded-2xl px-8 py-6 
+            shadow-lg 
+            hover:scale-[1.02] transition duration-500">
+
+    <span class="text-4xl text-blue-400">“</span>
+    La pintura acrílica permitió a artistas jóvenes reinventar el arte; al tener material plastificado como aglutinante, es mucho más flexible que otro tipo de pinturas, lo que permite usarla en casi cualquier tipo de superficie.
+    <span class="text-4xl text-blue-400">”</span>
+
+    <!-- Autor -->
+    <span class="block text-blue-400 mt-4 font-semibold tracking-wide">
+      — Saishoart (2025)
+    </span>
+  </p>
+
+</div>
+
+<!-- ANIMACIÓN -->
+<style>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    letter-spacing: 10px;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    letter-spacing: 2px;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.2s ease-out;
+}
+</style>
+
+</section>
+
+<!-- 🎨 GALERÍA PRO -->
+<section id="galeria-pro" class="bg-[#020617] py-10 px-6 relative z-10" style="margin-top: 0;">
+
+ 
+
+  <div class="grid-pro">
+
+      <div class="card-pro" onclick="openViewer(0)">
+        <img src="./img/cuadro 1.jpg">
+      </div>
+
+      <div class="card-pro" onclick="openViewer(1)">
+        <img src="./img/cuadro 2.jpg">
+      </div>
+
+      <div class="card-pro" onclick="openViewer(2)">
+        <img src="./img/cuadro 3.jpg">
+      </div>
+
+      <div class="card-pro" onclick="openViewer(3)">
+        <img src="./img/cuadro 4.png">
+      </div>
+
+      <div class="card-pro" onclick="openViewer(4)">
+        <img src="./img/cuadro 5.jpg">
+      </div>
+
+    </div>
+
+</section>
+
+<!-- VISOR DIOS -->
+<div id="viewer-pro" class="viewer hidden">
+
+  <div class="viewer-bg" onclick="closeViewer()"></div>
+
+  <div class="viewer-box" onclick="event.stopPropagation()">
+
+    <button class="close-btn" onclick="closeViewer()">✕</button>
+
+    <button class="nav left" onclick="prev()">‹</button>
+    <button class="nav right" onclick="next()">›</button>
+
+    <img id="viewer-img">
+
+    <div class="viewer-info">
+      <h2 id="viewer-title"></h2>
+      <p id="viewer-author"></p>
+      <p id="viewer-desc"></p>
+      <p id="viewer-tech"></p>
+      <p id="viewer-ig"></p>
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+/* TITULO */
+.titulo-pro {
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 60px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* GRID */
+.grid-pro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+/* CARDS */
+.card-pro {
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(34,211,238,0.2);
+  box-shadow: 0 0 20px rgba(59,130,246,0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-pro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(34,211,238,0.2), rgba(59,130,246,0.1));
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+.card-pro:hover {
+  border-color: rgba(34,211,238,0.5);
+  box-shadow: 0 10px 40px rgba(59,130,246,0.2), 0 0 30px rgba(34,211,238,0.1);
+  transform: translateY(-8px);
+}
+
+.card-pro:hover::before {
+  opacity: 1;
+}
+
+.card-pro img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* EFECTO NETFLIX */
+.card-pro:hover img {
+  transform: scale(1.12) rotate(-0.3deg);
+  filter: brightness(1.15) saturate(1.1);
+}
+
+/* VISOR */
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.viewer-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+}
+
+/* CONTENEDOR */
+.viewer-box {
+  position: relative;
+  max-width: 900px;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0;
+  transition: 0.4s ease;
+  background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(2,6,23,0.95));
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2), 0 0 40px rgba(34, 211, 238, 0.1);
+}
+
+/* ANIMACION ENTRADA */
+.viewer.active .viewer-box {
+  transform: translateY(-50%) scale(1);
+  opacity: 1;
+}
+
+/* IMG */
+#viewer-img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+/* INFO */
+.viewer-info {
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(34, 211, 238, 0.05));
+  border-top: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.viewer-info h2 {
+  color: #22d3ee;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #22d3ee, #3b82f6, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.viewer-info p {
+  color: #e5e7eb;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.viewer-info p:first-of-type {
+  color: #22d3ee;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.viewer-info p b {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+/* BOTONES */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: white;
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  cursor: pointer;
+  z-index: 10000;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(34, 211, 238, 0.3);
+  border-color: rgba(34, 211, 238, 0.6);
+  color: #22d3ee;
+  transform: scale(1.1);
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  color: white;
+  background: rgba(34, 211, 238, 0.2);
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.nav:hover {
+  background: rgba(34, 211, 238, 0.5);
+  color: #22d3ee;
+  border-color: rgba(34, 211, 238, 0.8);
+  transform: translateY(-50%) scale(1.2);
+}
+
+.nav.left { left: 15px; }
+.nav.right { right: 15px; }
+
+/* MOBILE */
+@media(max-width:768px){
+  #viewer-img {
+    height: 250px;
+  }
+  
+  .titulo-pro {
+    font-size: 32px;
+  }
+}
+</style>
+
+<script>
+const obras = [
+  {
+    img: "./img/cuadro 1.jpg",
+    titulo: "Los ojos del alma",
+    autor: "Leovanis Araujo Peña",
+    desc: "Esta obra refleja el sentir de una persona que a pesar de que la naturaleza lo privó de la vista, se refugiaba en ella misma inspirándose con los sonidos de la naturaleza como el sonar de las hojas, la frescura de los árboles y el choque de las corrientes de las aguas claras del río Tocaima para expresar sus sentimientos y aspectos del amor a través de la letra de sus canciones de una manera muy detallada y precisa.",
+    tecnica: "Acrílico sobre lienzo",
+    ig: "@leoaraujo0518"
+  },
+  {
+    img: "./img/cuadro 2.jpg",
+    titulo: "La recreación upecista",
+    autor: "Iván Arias",
+    desc: "Esta obra sale de un fragmento de la Obra 'la creación de Adán' de Miguel Ángel, mediante el cuál buscamos esa transferencia de conocimiento y el deber que tiene la universidad con la sociedad. A su vez, entender por medio del hilo que une estás manos, entenderlo como la conexión que debe existir entre todos los estamentos de la misma para llegar al pináculo social",
+    tecnica: "Acrílico sobre lienzo",
+    ig: "@ivart_75"
+  },
+  {
+    img: "./img/cuadro 3.jpg",
+    titulo: "Vive",
+    autor: "Fabián Gómez Rojas",
+    desc: "'El paso del tiempo y la finitud de la vida', donde el pez dorado en el reloj de arena simboliza la existencia que fluye inevitablemente hacia su fin, representando la fragilidad del tiempo.",
+    tecnica: "Acrílico sobre lienzo",
+    ig: "fabian_gomez_rojas"
+  },
+  {
+    img: "./img/cuadro 4.png",
+    titulo: "You and Me",
+    autor: "Valeria Arenas Márquez",
+    desc: "La tensión y deseo de dos personas",
+    tecnica: "Acrílico sobre lienzo",
+    ig: "No disponible"
+  },
+  {
+    img: "./img/cuadro 5.jpg",
+    titulo: "Mono Prieto",
+    autor: "Diego Cardona Bolaño",
+    desc: "Representa de donde vengo Guatapurí comunidad del resguardo indígena Kankuam",
+    tecnica: "Acrílico sobre lienzo",
+    ig: "@eldieguito.1"
+  }
+];
+
+let indexActual = 0;
+
+function openViewer(i){
+  indexActual = i;
+  cargar();
+  const viewer = document.getElementById("viewer-pro");
+  viewer.classList.remove("hidden");
+  setTimeout(()=> viewer.classList.add("active"),10);
+  document.body.style.overflow = "hidden";
+}
+
+function closeViewer(){
+  const viewer = document.getElementById("viewer-pro");
+  viewer.classList.remove("active");
+  setTimeout(()=> viewer.classList.add("hidden"),300);
+  document.body.style.overflow = "auto";
+}
+
+function cargar(){
+  const o = obras[indexActual];
+
+  fadeChange("viewer-img", o.img);
+  document.getElementById("viewer-title").textContent = o.titulo;
+  document.getElementById("viewer-author").textContent = "Autor: " + o.autor;
+  document.getElementById("viewer-desc").textContent = o.desc;
+  document.getElementById("viewer-tech").textContent = "Técnica: " + o.tecnica;
+  document.getElementById("viewer-ig").textContent = "Instagram: " + o.ig;
+}
+
+function next(){
+  indexActual = (indexActual + 1) % obras.length;
+  cargar();
+}
+
+function prev(){
+  indexActual = (indexActual - 1 + obras.length) % obras.length;
+  cargar();
+}
+
+/* TRANSICION SUAVE IMAGEN */
+function fadeChange(id, src){
+  const el = document.getElementById(id);
+  el.style.opacity = 0;
+
+  setTimeout(()=>{
+    el.src = src;
+    el.style.opacity = 1;
+  },200);
+}
+
+/* TECLADO */
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape") closeViewer();
+  if(e.key === "ArrowRight") next();
+  if(e.key === "ArrowLeft") prev();
+});
+</script>
+
+<div class="reveal bg-gradient-to-br from-[#0f172a] to-[#020617] 
+            border border-white/10 
+            rounded-3xl p-10 md:p-14 
+            text-gray-200 text-lg leading-relaxed 
+            shadow-2xl relative">
+
+  <!-- EFECTO LUZ -->
+  <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-cyan-400/10 pointer-events-none"></div>
+
+ 
+<section id="info" class="w-full py-32 px-6 text-white relative">
+
+  <!-- FONDO DINÁMICO -->
+  <div class="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#020617] to-[#0f172a]"></div>
+  <div class="absolute w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full top-[-100px] left-[-100px] animate-pulse"></div>
+  <div class="absolute w-[400px] h-[400px] bg-cyan-400/10 blur-[120px] rounded-full bottom-[-100px] right-[-100px] animate-pulse"></div>
+
+  <div class="relative max-w-7xl mx-auto">
+
+    <!-- TÍTULO -->
+    <h2 class="reveal text-4xl md:text-6xl font-bold text-center mb-16 tracking-wide">
+      Más Información
+      <span class="block w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 rounded-full"></span>
+    </h2>
+
+    <!-- TARJETA -->
+    <div class="reveal backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-10 shadow-2xl hover:shadow-[#D4AF37]/10 transition duration-500">
+
+      <p class="text-gray-200 mb-6 leading-relaxed text-lg">
+        La Facultad de Bellas Artes es un espacio que ofrece a los estudiantes la oportunidad de descubrir un mundo artístico a través de la carrera de Licenciatura en Artes.
+      </p>
+
+      <p class="text-gray-200 mb-6 leading-relaxed text-lg">
+        Se destaca por brindar un amplio mundo de oportunidades para que los estudiantes se desarrollen en sus diferentes ámbitos artísticos, como la plástica, la danza, la música y el teatro.
+      </p>
+
+      <p class="text-gray-200 mb-6 leading-relaxed text-lg">
+        La galería DNS-CR es un espacio para que los estudiantes de la Facultad de Bellas Artes puedan exponer sus obras artísticas plásticas, y nos enorgullece ser parte de esta institución.
+      </p>
+
+      <a href="https://www.unicesar.edu.co/facultades_pregrado/pregrados-bellas-artes/" 
+         target="_blank"
+         class="inline-block px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-600 
+                hover:scale-105 hover:shadow-lg hover:shadow-cyan-400/30
+                rounded-xl font-semibold transition duration-300">
+        Visitar sitio oficial →
+      </a>
+
+    </div>
+
+    <!-- UBICACIÓN -->
+    <div class="grid md:grid-cols-2 gap-10 mt-20">
+
+      <div class="reveal rounded-3xl overflow-hidden border border-white/10 
+                  hover:scale-[1.02] transition duration-500 shadow-xl">
+        <iframe 
+          src="https://www.google.com/maps?q=Cra.%2015%20%2312A%2054,%20Valledupar,%20Cesar&output=embed"
+          width="100%" height="350" style="border:0;" loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="reveal backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col justify-center">
+
+        <h3 class="text-2xl font-bold text-cyan-300 mb-4">
+          📍 Ubicación
+        </h3>
+
+        <p class="text-gray-200 mb-4 text-lg">
+          Cra. 15 #12A 54, Valledupar, Cesar
+        </p>
+
+        <p class="text-gray-400">
+          Ven y descubre el talento artístico.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- FORMULARIO WHATSAPP -->
+    <div class="reveal mt-24 max-w-3xl mx-auto backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-10 shadow-2xl">
+
+      <h3 class="text-2xl font-bold text-center text-cyan-300 mb-8">
+        Escríbenos por WhatsApp
+      </h3>
+
+      <form id="whatsappForm" class="flex flex-col gap-5">
+
+        <input id="nombre" type="text" placeholder="Tu nombre"
+          class="p-4 rounded-xl bg-[#020617]/80 border border-white/10 text-white 
+                 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition">
+
+        <input id="correo" type="email" placeholder="Tu correo"
+          class="p-4 rounded-xl bg-[#020617]/80 border border-white/10 text-white 
+                 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition">
+
+        <textarea id="mensaje" rows="4" placeholder="Tu mensaje..."
+          class="p-4 rounded-xl bg-[#020617]/80 border border-white/10 text-white 
+                 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition"></textarea>
+
+        <button type="submit"
+          class="mt-4 bg-gradient-to-r from-cyan-500 to-blue-600 
+                 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 
+                 py-3 rounded-xl font-semibold transition duration-300">
+          Enviar a WhatsApp 🚀
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- SCRIPT ULTRA PRO -->
+<script>
+document.getElementById("whatsappForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nombre = document.getElementById("nombre").value;
+  const correo = document.getElementById("correo").value;
+  const mensaje = document.getElementById("mensaje").value;
+
+  const texto = `Hola, soy ${nombre}%0A📧 Correo: ${correo}%0A💬 Mensaje: ${mensaje}`;
+
+  const numero = "573XXXXXXXXX"; // ← CAMBIA ESTO
+
+  const url = `https://wa.me/${numero}?text=${texto}`;
+
+  window.open(url, "_blank");
+});
+</script>
+
+<!-- ANIMACIONES SCROLL - INTERSECTION OBSERVER -->
+<script>
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.2 });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+
+<style>
+.reveal {
+
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+</style>
+
+
+
+
+
+
+<style>
+.footer-ultra {
+  position: relative;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  padding: 80px 20px;
+  text-align: center;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s ease;
+}
+
+.footer-ultra.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer-glow {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(34,211,238,0.3), transparent);
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
+.footer-content { position: relative; z-index: 2; }
+
+.footer-logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 2px;
+}
+
+.footer-logo span {
+  display: block;
+  font-size: 14px;
+  color: #22d3ee;
+  margin-top: 5px;
+  letter-spacing: 3px;
+}
+
+.footer-divider {
+  width: 120px;
+  height: 3px;
+  margin: 25px auto;
+  background: linear-gradient(90deg, #22d3ee, #3b82f6);
+  border-radius: 10px;
+  animation: pulseLine 3s infinite ease-in-out;
+}
+
+@keyframes pulseLine {
+  0%, 100% { opacity: 0.5; transform: scaleX(1); }
+  50% { opacity: 1; transform: scaleX(1.3); }
+}
+
+.footer-copy {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-author {
+  color: #22d3ee;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footer-author:hover {
+  color: #3b82f6;
+  text-shadow: 0 0 12px rgba(59,130,246,0.8);
+}
+</style>
+
+<footer class="footer-ultra">
+  <div class="footer-glow"></div>
+  <div class="footer-content">
+    <h2 class="footer-logo">
+      DNS-CR <span>Galería de Arte</span>
+    </h2>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">
+      © 2026 Todos los derechos reservados
+      <br>
+      <span class="footer-author">Layoner Murgas</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("scroll", () => {
+  const footer = document.querySelector(".footer-ultra");
+  if (footer.getBoundingClientRect().top < window.innerHeight * 0.9) {
+    footer.classList.add("visible");
+  }
+});
+</script>
+
+</body>
+</html>

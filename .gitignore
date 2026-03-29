@@ -1,0 +1,54 @@
+# 🚫 Archivos ejecutables
+*.exe
+*.msi
+*.bat
+*.cmd
+
+# 📦 Archivos comprimidos
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# 🎥 Multimedia pesada
+
+*.mov
+*.avi
+*.mkv
+
+# 🖼️ Imágenes pesadas (opcional)
+*.psd
+*.ai
+
+# 🧠 Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# ⚙️ Configuración de editores
+.vscode/
+.idea/
+
+# 📂 Dependencias (si usas Node)
+node_modules/
+
+# 🔐 Variables de entorno
+.env
+
+# 📊 Logs
+*.log
+
+# 🧪 Archivos temporales
+tmp/
+temp/
+
+# 🚀 Builds o compilados
+dist/
+build/
+
+# 🧩 Archivos grandes en general (más de 100MB aprox)
+*.iso
+*.bin
+
+# ❌ Tu archivo específico que dio error
+img/kro-ide-0.11.107-stable-win32-x64.exe
