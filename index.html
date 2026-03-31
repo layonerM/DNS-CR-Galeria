@@ -732,6 +732,8 @@ window.addEventListener("load", () => {
 <!-- MODAL DIOS -->
 <div id="modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden z-50 flex items-center justify-center" onclick="closeModal()">
 
+  <button onclick="closeModal()" class="close-btn-oleo">✕</button>
+
   <div class="relative max-w-5xl w-full grid md:grid-cols-2 bg-gradient-to-br from-[#0f172a] to-[#020617] rounded-2xl overflow-hidden border border-cyan-400/30 shadow-2xl shadow-cyan-400/20" onclick="event.stopPropagation()">
 
     <!-- IMAGEN ZOOM -->
@@ -741,8 +743,6 @@ window.addEventListener("load", () => {
 
     <!-- INFO -->
     <div class="p-8 flex flex-col justify-center">
-      <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-2xl hover:text-cyan-400 transition duration-300">✕</button>
-
       <h3 id="modalTitle" class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent"></h3>
       <p id="modalDesc" class="text-gray-300 mb-6 leading-relaxed text-base"></p>
 
@@ -779,6 +779,33 @@ window.addEventListener("load", () => {
 /* EFECTO 3D REAL */
 .card:hover .card-img {
   transform: scale(1.05);
+}
+
+/* BOTON CERRAR OLEO */
+.close-btn-oleo {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: white;
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  cursor: pointer;
+  z-index: 10000;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.close-btn-oleo:hover {
+  background: rgba(34, 211, 238, 0.3);
+  border-color: rgba(34, 211, 238, 0.6);
+  color: #22d3ee;
+  transform: scale(1.1);
 }
 </style>
 
@@ -968,12 +995,6 @@ modalImg.addEventListener("mouseleave", () => {
         </div>
 
       </div>
-
-    </div>
-
-  </div>
-</section>
-<section id="acrilico" class="mt-10 px-6 relative z-10">
 
   <!-- CONTENEDOR -->
 <div class="w-full flex flex-col items-center justify-center text-center px-6 py-8 relative">
@@ -1300,13 +1321,35 @@ modalImg.addEventListener("mouseleave", () => {
   .titulo-pro {
     font-size: 32px;
   }
+
+  /* OLEO MODAL MOBILE */
+  #modal > div.relative {
+    max-width: 95vw;
+    width: 95vw;
+    margin: 10px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .close-btn-oleo {
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    top: 30px;
+    right: 20px;
+    background: rgba(34, 211, 238, 0.8);
+    border: 2px solid rgba(34, 211, 238, 1);
+    color: #020617;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
 }
 </style>
 
 <script>
 const obras = [
   {
-    img: "./img/cuadro 1.jpg",
+    img: "./img/Cuadro 1.jpg",
     titulo: "Los ojos del alma",
     autor: "Leovanis Araujo Peña",
     desc: "Esta obra refleja el sentir de una persona que a pesar de que la naturaleza lo privó de la vista, se refugiaba en ella misma inspirándose con los sonidos de la naturaleza como el sonar de las hojas, la frescura de los árboles y el choque de las corrientes de las aguas claras del río Tocaima para expresar sus sentimientos y aspectos del amor a través de la letra de sus canciones de una manera muy detallada y precisa.",
@@ -1314,7 +1357,7 @@ const obras = [
     ig: "@leoaraujo0518"
   },
   {
-    img: "./img/cuadro 2.jpg",
+    img: "./img/Cuadro 2.jpg",
     titulo: "La recreación upecista",
     autor: "Iván Arias",
     desc: "Esta obra sale de un fragmento de la Obra 'la creación de Adán' de Miguel Ángel, mediante el cuál buscamos esa transferencia de conocimiento y el deber que tiene la universidad con la sociedad. A su vez, entender por medio del hilo que une estás manos, entenderlo como la conexión que debe existir entre todos los estamentos de la misma para llegar al pináculo social",
@@ -1322,7 +1365,7 @@ const obras = [
     ig: "@ivart_75"
   },
   {
-    img: "./img/cuadro 3.jpg",
+    img: "./img/Cuadro 3.jpg",
     titulo: "Vive",
     autor: "Fabián Gómez Rojas",
     desc: "'El paso del tiempo y la finitud de la vida', donde el pez dorado en el reloj de arena simboliza la existencia que fluye inevitablemente hacia su fin, representando la fragilidad del tiempo.",
@@ -1338,7 +1381,7 @@ const obras = [
     ig: "No disponible"
   },
   {
-    img: "./img/cuadro 5.jpg",
+    img: "./img/Cuadro 5.jpg",
     titulo: "Mono Prieto",
     autor: "Diego Cardona Bolaño",
     desc: "Representa de donde vengo Guatapurí comunidad del resguardo indígena Kankuam",
