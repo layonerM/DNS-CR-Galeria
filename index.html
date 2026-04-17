@@ -1458,6 +1458,145 @@ document.addEventListener("keydown", e=>{
   <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-cyan-400/10 pointer-events-none"></div>
 
  
+<!-- 🎬 DETRÁS DE LA OBRA - MODO CINEMÁTICO -->
+<section id="detras-obra" class="cinematic-section">
+<!-- FONDO -->
+<div class="cinematic-bg"></div>
+<div class="cinematic-light"></div>
+<div class="cinematic-container">
+<!-- TITULO -->
+<div class="cinematic-title reveal"><h2>Detrás de la <span>obra</span></h2><div class="line"></div></div>
+<!-- FASES -->
+<div class="cinematic-grid">
+<div class="cinematic-card reveal" data-speed="0.2"><img src="./img/esquiina%201.jpg"><div class="overlay"><h3>Inicio</h3><p>Boceto a lápiz</p></div></div>
+<div class="cinematic-card reveal" data-speed="0.4"><img src="./img/esquina%202.jpg"><div class="overlay"><h3>Proceso</h3><p>Capas de óleo</p></div></div>
+<div class="cinematic-card reveal" data-speed="0.6"><img src="./img/esquina%203.jpg"><div class="overlay"><h3>Final</h3><p>Obra terminada</p></div></div>
+</div>
+<!-- TEXTO -->
+<div class="cinematic-text reveal">
+  <h1 class="autor-titulo">
+    <span class="autor-label">Autor</span>
+    <span class="autor-nombre">Fabián Gómez Rojas</span>
+    <span class="autor-linea"></span>
+  </h1>
+
+  <style>
+    .autor-titulo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 36px;
+    }
+    .autor-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #D4AF37;
+      opacity: 0.8;
+    }
+    .autor-nombre {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #D4AF37, #ffffff, #D4AF37);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    .autor-linea {
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+  </style>
+<p>La ironía de la humanización, es un óleo sobre lienzo de cincuenta por treinta y dos centímetros. En este cuadro, un mono es el protagonista. Fue realizado con una paleta de colores cálidos y fríos...</p>
+<p>El proceso comenzó con un boceto a lápiz, seguido de capas de óleo aplicadas con diferentes pinceles...</p>
+<p>Este cuadro es un tributo a esas pequeñas ironías que nos hacen cuestionar nuestra propia naturaleza.</p>
+<div class="controls">
+<button id="audioBtnCine">▶ Escuchar historia</button>
+<a href="#oleo">Ver al óleo →</a>
+</div>
+</div>
+</div>
+<!-- AUDIO -->
+<audio id="audioCine"><source src="./img/audio.ogg" type="audio/mpeg"></audio>
+</section>
+
+<style>
+/* BASE */
+.cinematic-section{position: relative;padding: 140px 20px;overflow: hidden;color: white;background: #020617;}
+/* FONDO */
+.cinematic-bg{position: absolute;inset: 0;background: radial-gradient(circle at 30% 30%, #1e3a8a30, transparent),radial-gradient(circle at 70% 70%, #D4AF3730, transparent),#020617;}
+.cinematic-light{position: absolute;width: 600px;height: 600px;background: #D4AF37;filter: blur(200px);opacity: 0.1;top: -100px;left: -100px;animation: floatLight 8s infinite alternate ease-in-out;}
+@keyframes floatLight{0%{transform: translate(0,0);}100%{transform: translate(200px,150px);}}
+/* CONTENEDOR */
+.cinematic-container{max-width: 1200px;margin: auto;position: relative;z-index: 2;}
+/* TITULO */
+.cinematic-title{text-align: center;margin-bottom: 100px;}
+.cinematic-title h2{font-size: 60px;font-weight: 900;}
+.cinematic-title span{color: #D4AF37;}
+.line{width: 120px;height: 4px;background: linear-gradient(90deg,#D4AF37,#2E3F6E);margin: 20px auto;border-radius: 10px;}
+/* GRID */
+.cinematic-grid{display: grid;grid-template-columns: repeat(auto-fit,minmax(250px,1fr));gap: 40px;margin-bottom: 100px;}
+/* CARD */
+.cinematic-card{position: relative;overflow: hidden;border-radius: 20px;opacity: 0;transition: opacity 1s ease, transform 1s ease;}
+.cinematic-card.active{opacity: 1;}
+.cinematic-card img{width: 100%;height: 300px;object-fit: cover;transition: 0.5s;}
+.cinematic-card:hover img{transform: scale(1.1);filter: brightness(0.5);}
+.overlay{position: absolute;inset: 0;display: flex;flex-direction: column;justify-content: flex-end;padding: 20px;opacity: 0;transition: 0.4s;background: linear-gradient(to top,black,transparent);}
+.cinematic-card:hover .overlay{opacity: 1;}
+/* TEXTO */
+.cinematic-text{max-width: 800px;margin: auto;text-align: center;opacity: 0;transform: translateY(80px);transition: 1s;}
+.cinematic-text p{margin-bottom: 20px;color: #ccc;}
+/* BOTONES */
+.controls{margin-top: 40px;display: flex;gap: 20px;justify-content: center;}
+.controls button{padding: 12px 24px;background: linear-gradient(90deg,#2E3F6E,#D4AF37);border: none;border-radius: 10px;color: white;cursor: pointer;transition: 0.3s;}
+.controls button:hover{transform: scale(1.1);}
+.controls a{padding: 12px 24px;border: 1px solid #D4AF37;border-radius: 10px;color: #D4AF37;text-decoration: none;}
+/* REVEAL */
+.reveal.active{opacity: 1;transform: translateY(0);}
+</style>
+
+<script>
+// SCROLL ANIMATION
+const revealsCine = document.querySelectorAll('#detras-obra .reveal');
+const observerCine = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){ entry.target.classList.add('active'); }
+  });
+},{threshold:0.2});
+revealsCine.forEach(el=>observerCine.observe(el));
+
+// PARALLAX - solo actúa sobre cards ya visibles
+window.addEventListener("scroll", ()=>{
+  document.querySelectorAll(".cinematic-card.active").forEach(el=>{
+    let speed = el.getAttribute("data-speed") || 0;
+    let rect = el.getBoundingClientRect();
+    let offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed * 0.3;
+    el.style.transform = `translateY(${offset}px)`;
+  });
+});
+
+// AUDIO
+const audioCine = document.getElementById("audioCine");
+const btnCine = document.getElementById("audioBtnCine");
+btnCine.addEventListener("click", ()=>{
+  if(audioCine.paused){ audioCine.play(); btnCine.textContent = "⏸ Pausar"; }
+  else { audioCine.pause(); btnCine.textContent = "▶ Escuchar historia"; }
+});
+</script>
+
 <section id="info" class="w-full py-32 px-6 text-white relative">
 
   <!-- FONDO DINÁMICO -->
