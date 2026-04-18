@@ -1448,15 +1448,6 @@ document.addEventListener("keydown", e=>{
 });
 </script>
 
-<div class="reveal bg-gradient-to-br from-[#0f172a] to-[#020617] 
-            border border-white/10 
-            rounded-3xl p-10 md:p-14 
-            text-gray-200 text-lg leading-relaxed 
-            shadow-2xl relative">
-
-  <!-- EFECTO LUZ -->
-  <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-cyan-400/10 pointer-events-none"></div>
-
  
 <!-- 🎬 DETRÁS DE LA OBRA - MODO CINEMÁTICO -->
 <section id="detras-obra" class="cinematic-section">
@@ -1535,24 +1526,24 @@ document.addEventListener("keydown", e=>{
 
 <style>
 /* BASE */
-.cinematic-section{position: relative;padding: 140px 20px;overflow: hidden;color: white;background: #020617;}
+.cinematic-section{position: relative;padding: 80px 20px;overflow: hidden;color: white;background: #020617;}
 /* FONDO */
-.cinematic-bg{position: absolute;inset: 0;background: radial-gradient(circle at 30% 30%, #1e3a8a30, transparent),radial-gradient(circle at 70% 70%, #D4AF3730, transparent),#020617;}
-.cinematic-light{position: absolute;width: 600px;height: 600px;background: #D4AF37;filter: blur(200px);opacity: 0.1;top: -100px;left: -100px;animation: floatLight 8s infinite alternate ease-in-out;}
-@keyframes floatLight{0%{transform: translate(0,0);}100%{transform: translate(200px,150px);}}
+.cinematic-bg{position: absolute;inset: 0;z-index: 0;background: radial-gradient(circle at 30% 30%, #1e3a8a30, transparent),radial-gradient(circle at 70% 70%, #D4AF3730, transparent),#020617;pointer-events: none;}
+.cinematic-light{position: absolute;width: 400px;height: 400px;background: #D4AF37;filter: blur(160px);opacity: 0.08;top: -80px;left: -80px;z-index: 0;pointer-events: none;animation: floatLight 8s infinite alternate ease-in-out;}
+@keyframes floatLight{0%{transform: translate(0,0);}100%{transform: translate(150px,100px);}}
 /* CONTENEDOR */
 .cinematic-container{max-width: 1200px;margin: auto;position: relative;z-index: 2;}
 /* TITULO */
-.cinematic-title{text-align: center;margin-bottom: 100px;}
-.cinematic-title h2{font-size: 60px;font-weight: 900;}
+.cinematic-title{text-align: center;margin-bottom: 60px;}
+.cinematic-title h2{font-size: clamp(32px, 6vw, 60px);font-weight: 900;}
 .cinematic-title span{color: #D4AF37;}
 .line{width: 120px;height: 4px;background: linear-gradient(90deg,#D4AF37,#2E3F6E);margin: 20px auto;border-radius: 10px;}
 /* GRID */
-.cinematic-grid{display: grid;grid-template-columns: repeat(auto-fit,minmax(250px,1fr));gap: 40px;margin-bottom: 100px;}
+.cinematic-grid{display: grid;grid-template-columns: repeat(auto-fit,minmax(200px,1fr));gap: 24px;margin-bottom: 60px;}
 /* CARD */
 .cinematic-card{position: relative;overflow: hidden;border-radius: 20px;opacity: 0;transition: opacity 1s ease, transform 1s ease;}
 .cinematic-card.active{opacity: 1;}
-.cinematic-card img{width: 100%;height: 300px;object-fit: cover;transition: 0.5s;}
+.cinematic-card img{width: 100%;height: 260px;object-fit: cover;transition: 0.5s;display: block;}
 .cinematic-card:hover img{transform: scale(1.1);filter: brightness(0.5);}
 .overlay{position: absolute;inset: 0;display: flex;flex-direction: column;justify-content: flex-end;padding: 20px;opacity: 0;transition: 0.4s;background: linear-gradient(to top,black,transparent);}
 .cinematic-card:hover .overlay{opacity: 1;}
@@ -1560,12 +1551,20 @@ document.addEventListener("keydown", e=>{
 .cinematic-text{max-width: 800px;margin: auto;text-align: center;opacity: 0;transform: translateY(80px);transition: 1s;}
 .cinematic-text p{margin-bottom: 20px;color: #ccc;}
 /* BOTONES */
-.controls{margin-top: 40px;display: flex;gap: 20px;justify-content: center;}
+.controls{margin-top: 40px;display: flex;flex-wrap: wrap;gap: 16px;justify-content: center;}
 .controls button{padding: 12px 24px;background: linear-gradient(90deg,#2E3F6E,#D4AF37);border: none;border-radius: 10px;color: white;cursor: pointer;transition: 0.3s;}
 .controls button:hover{transform: scale(1.1);}
 .controls a{padding: 12px 24px;border: 1px solid #D4AF37;border-radius: 10px;color: #D4AF37;text-decoration: none;}
 /* REVEAL */
-.reveal.active{opacity: 1;transform: translateY(0);}
+.reveal.active{opacity: 1 !important;transform: translateY(0) !important;}
+/* MÓVIL */
+@media (max-width: 640px) {
+  .cinematic-section{padding: 60px 16px;}
+  .cinematic-grid{grid-template-columns: 1fr;gap: 16px;}
+  .cinematic-card img{height: 200px;}
+  .cinematic-title{margin-bottom: 40px;}
+  .cinematic-grid{margin-bottom: 40px;}
+}
 </style>
 
 <script>
@@ -1575,7 +1574,7 @@ const observerCine = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){ entry.target.classList.add('active'); }
   });
-},{threshold:0.2});
+},{threshold:0.05, rootMargin: "0px 0px -50px 0px"});
 revealsCine.forEach(el=>observerCine.observe(el));
 
 // PARALLAX - solo actúa sobre cards ya visibles
