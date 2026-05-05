@@ -8,6 +8,14 @@
 </head>
 <body class="font-sans">
 
+<!-- RESET DE SCROLL AL CARGAR - evita que quede bloqueado -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
+  });
+</script>
+
 <!-- CURSOR LIGHT -->
 <div id="cursorLight"></div>
 
@@ -118,6 +126,7 @@ window.addEventListener("DOMContentLoaded", () => {
       <a href="#info" class="nav-link">Información</a>
       <a href="#oleo" class="nav-link">Óleo</a>
       <a href="#acrilico" class="nav-link">Acrílico</a>
+      <a href="#detras-obra" class="nav-link">Detrás de la Obra</a>
     </nav>
 
     <!-- CTA + MENU BTN -->
@@ -500,48 +509,52 @@ window.addEventListener('scroll', () => {
 });
 </script>
 <script>
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+// Script de partículas movido a después del canvas — se inicializa en el evento load
+window.addEventListener("load", function initParticles(){
+  const canvas = document.getElementById("particles");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
 
-function resizeCanvas(){
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+  function resizeCanvas(){
+    canvas.width = canvas.offsetWidth || window.innerWidth;
+    canvas.height = canvas.offsetHeight || window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
-let particles = [];
+  let particles = [];
 
-for(let i = 0; i < 80; i++){
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: Math.random() * 2,
-    speedX: (Math.random() - 0.5) * 0.5,
-    speedY: (Math.random() - 0.5) * 0.5
-  });
-}
+  for(let i = 0; i < 80; i++){
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2,
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: (Math.random() - 0.5) * 0.5
+    });
+  }
 
-function animateParticles(){
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function animateParticles(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  particles.forEach(p => {
-    p.x += p.speedX;
-    p.y += p.speedY;
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
 
-    if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-    if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+      if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+      if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
 
-    ctx.fillStyle = "rgba(255,255,255,0.2)";
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
-  });
+      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
 
   requestAnimationFrame(animateParticles);
-}
+  }
 
-animateParticles();
+  animateParticles();
+});
 </script>
 <!-- ICONOS FLOTANTES -->
 <div class="pointer-events-none z-0" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
@@ -1405,7 +1418,7 @@ function closeViewer(){
   const viewer = document.getElementById("viewer-pro");
   viewer.classList.remove("active");
   setTimeout(()=> viewer.classList.add("hidden"),300);
-  document.body.style.overflow = "auto";
+  document.body.style.overflow = "";
 }
 
 function cargar(){
