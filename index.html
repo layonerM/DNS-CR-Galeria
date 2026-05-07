@@ -61,24 +61,18 @@ window.addEventListener("load", () => {
     light.style.top = e.clientY - 150 + "px";
   });
 
-  // PARALLAX (DESKTOP + MOBILE)
-  function moveElements(x, y){
-    document.querySelectorAll(".float-item").forEach((el,i)=>{
-      const speed = (i+1)*0.01;
-      el.style.transform = `translate(${x*speed}px, ${y*speed}px)`;
+  // PARALLAX solo en DESKTOP
+  if (window.innerWidth >= 768) {
+    function moveElements(x, y){
+      document.querySelectorAll(".float-item").forEach((el,i)=>{
+        const speed = (i+1)*0.01;
+        el.style.transform = `translate(${x*speed}px, ${y*speed}px)`;
+      });
+    }
+    document.addEventListener("mousemove",(e)=>{
+      moveElements(e.clientX - window.innerWidth/2, e.clientY - window.innerHeight/2);
     });
   }
-
-  // DESKTOP
-  document.addEventListener("mousemove",(e)=>{
-    moveElements(e.clientX - window.innerWidth/2, e.clientY - window.innerHeight/2);
-  });
-
-  // MOBILE (TOUCH)
-  document.addEventListener("touchmove",(e)=>{
-    const touch = e.touches[0];
-    moveElements(touch.clientX - window.innerWidth/2, touch.clientY - window.innerHeight/2);
-  });
 
 });
 </script>
@@ -142,6 +136,7 @@ window.addEventListener("DOMContentLoaded", () => {
     <a href="#info" class="block text-gray-200 hover:text-cyan-400">Información</a>
     <a href="#oleo" class="block text-gray-200 hover:text-cyan-400">Óleo</a>
     <a href="#acrilico" class="block text-gray-200 hover:text-cyan-400">Acrílico</a>
+    <a href="#detras-obra" class="block text-gray-200 hover:text-cyan-400">Detrás de la Obra</a>
   </div>
 </header>
 
@@ -305,6 +300,37 @@ h1, h2, h3 {
 @media (max-width: 640px) {
   #cursorLight {
     display: none;
+  }
+  /* Ocultar canvas de partículas en móvil */
+  #particles {
+    display: none;
+  }
+  /* Ocultar iconos flotantes en móvil */
+  .float-item {
+    display: none;
+  }
+  /* Desactivar backdrop-filter costoso en móvil */
+  .card-dios,
+  .viewer-box,
+  .viewer-bg,
+  #headerInner,
+  #mobileMenu {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  /* Desactivar animate-pulse en fondos grandes */
+  .animate-pulse {
+    animation: none !important;
+  }
+  /* Desactivar animación del fondo cinemático */
+  .cinematic-light {
+    animation: none !important;
+  }
+  /* Desactivar shimmer del nombre del autor */
+  .autor-nombre {
+    animation: none !important;
+    background: #D4AF37 !important;
+    -webkit-background-clip: text !important;
   }
 }
 .float-item {
@@ -480,18 +506,27 @@ menuBtn.addEventListener('click', () => {
   mobileMenu.classList.toggle('hidden');
 });
 
+// THROTTLE para eventos de scroll
+function throttle(fn, delay) {
+  let last = 0;
+  return function(...args) {
+    const now = Date.now();
+    if (now - last >= delay) { last = now; fn.apply(this, args); }
+  };
+}
+
 // SCROLL EFFECT (glass + shrink)
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', throttle(() => {
   if (window.scrollY > 50) {
     header.classList.add('py-2','shadow-2xl');
   } else {
     header.classList.remove('py-2','shadow-2xl');
   }
-});
+}, 100), { passive: true });
 
 // ACTIVE LINK DETECTION
 const sections = document.querySelectorAll('section');
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', throttle(() => {
   let current = '';
   sections.forEach(section => {
     const sectionTop = section.offsetTop - 100;
@@ -506,11 +541,14 @@ window.addEventListener('scroll', () => {
       link.classList.add('active');
     }
   });
-});
+}, 150), { passive: true });
 </script>
 <script>
 // Script de partículas movido a después del canvas — se inicializa en el evento load
 window.addEventListener("load", function initParticles(){
+  // En móvil no se renderizan partículas para mejorar rendimiento
+  if (window.innerWidth < 768) return;
+
   const canvas = document.getElementById("particles");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
@@ -522,15 +560,16 @@ window.addEventListener("load", function initParticles(){
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
+  // Menos partículas en desktop también para mejor rendimiento
   let particles = [];
 
-  for(let i = 0; i < 80; i++){
+  for(let i = 0; i < 40; i++){
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 2,
-      speedX: (Math.random() - 0.5) * 0.5,
-      speedY: (Math.random() - 0.5) * 0.5
+      size: Math.random() * 1.5,
+      speedX: (Math.random() - 0.5) * 0.4,
+      speedY: (Math.random() - 0.5) * 0.4
     });
   }
 
@@ -544,7 +583,7 @@ window.addEventListener("load", function initParticles(){
       if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
       if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
 
-      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      ctx.fillStyle = "rgba(255,255,255,0.15)";
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
@@ -1590,15 +1629,17 @@ const observerCine = new IntersectionObserver(entries=>{
 },{threshold:0.05, rootMargin: "0px 0px -50px 0px"});
 revealsCine.forEach(el=>observerCine.observe(el));
 
-// PARALLAX - solo actúa sobre cards ya visibles
-window.addEventListener("scroll", ()=>{
-  document.querySelectorAll(".cinematic-card.active").forEach(el=>{
-    let speed = el.getAttribute("data-speed") || 0;
-    let rect = el.getBoundingClientRect();
-    let offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed * 0.3;
-    el.style.transform = `translateY(${offset}px)`;
-  });
-});
+// PARALLAX - solo en desktop y con throttle
+if (window.innerWidth >= 768) {
+  window.addEventListener("scroll", throttle(()=>{
+    document.querySelectorAll(".cinematic-card.active").forEach(el=>{
+      let speed = el.getAttribute("data-speed") || 0;
+      let rect = el.getBoundingClientRect();
+      let offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed * 0.3;
+      el.style.transform = `translateY(${offset}px)`;
+    });
+  }, 100));
+}
 
 // AUDIO
 const audioCine = document.getElementById("audioCine");
@@ -1859,7 +1900,7 @@ window.addEventListener("scroll", () => {
   if (footer.getBoundingClientRect().top < window.innerHeight * 0.9) {
     footer.classList.add("visible");
   }
-});
+}, { passive: true });
 </script>
 
 </body>
