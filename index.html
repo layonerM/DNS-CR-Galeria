@@ -766,6 +766,10 @@ window.addEventListener("load", () => {
       <img src="./img/imagen 1.jpg" class="card-img">
     </div>
 
+    <div class="card" data-index="5">
+      <img src="./img/Cuadro 3 técnica óleo.jpg" class="card-img" alt="Fresas con crema - Alisson Javier Torres Mendoza" onerror="this.onerror=null;this.src='./img/Cuadro 5.jpg'">
+    </div>
+
     <div class="card" data-index="1">
       <img src="./img/imagen 2.jpg" class="card-img">
     </div>
@@ -776,6 +780,14 @@ window.addEventListener("load", () => {
 
     <div class="card" data-index="3">
       <img src="./img/imagen 4.jpg" class="card-img">
+    </div>
+
+    <div class="card" data-index="4">
+      <img src="./img/Cuadro 1 técnica óleo.jpg" class="card-img" alt="El jardín del silencio - Alisson Javier Torres Mendoza" onerror="this.onerror=null;this.src='./img/Cuadro 5.jpg'">
+    </div>
+
+    <div class="card" data-index="6">
+      <img src="./img/Cuadro 2 técnica óleo.jpg" class="card-img" alt="Lágrimas de almas etéreas - Alisson Javier Torres Mendoza" onerror="this.onerror=null;this.src='./img/Cuadro 1.jpg'">
     </div>
 
   </div>
@@ -919,6 +931,30 @@ const data = [
     author: "Natalia Orozco",
     insta: ""
   }
+  ,
+  {
+    img: "./img/cuadro 1 técnica óleo.jpg",
+    title: "El jardín del silencio",
+    desc: "La llamo así porque nace de ese lugar donde las emociones dejan de hablar y comienzan a respirarse.\n\nQuise representar la mente como un paisaje líquido: un espacio donde los pensamientos se moldean hasta convertirse en flores, mareas y pequeños universos suspendidos. La ausencia de los ojos simboliza una mirada dirigida hacia adentro, hacia aquello que duele en silencio.\n\nEl azul atraviesa toda la obra porque para mí tiene memoria sensorial: huele a lluvia fría, sabe a madrugada y suena como un vacío tranquilo. Las manos buscan transmitir fragilidad, como si el cuerpo intentara sostenerse mientras algo dentro de él florece y se rompe al mismo tiempo.\n\nMás que un rostro, intenté pintar una emoción: la belleza delicada de sentirse perdido dentro de uno mismo.",
+    author: "Alisson Javier Torres Mendoza",
+    insta: "@alison_y_su_arte"
+  }
+  ,
+  {
+    img: "./img/Cuadro 3 técnica óleo.jpg",
+    title: "Fresas con crema",
+    desc: "inspirados en esos pequeños momentos simples que suelen quedarse viviendo en la memoria.\n\nQuise representar la dulzura de lo cotidiano a través de elementos familiares: el postre, el color de las fresas, el brillo del vidrio y la sensación de compartir algo sencillo con las personas que queremos. Cada composición tiene una perspectiva distinta, como si fueran recuerdos diferentes de un mismo instante.",
+    author: "Alisson Javier Torres Mendoza",
+    insta: "@alison_y_su_arte"
+  }
+  ,
+  {
+    img: "./img/Cuadro 2 técnica óleo.jpg",
+    title: "lágrimas de almas etéreas",
+    desc: "trata de la tristeza que incluso los seres más etéreos son incapaces de contener.\n\nQuise representar a un ángel observando el dolor desde la distancia, condenado a contemplar aquello que no puede cambiar. Su mirada baja y la lágrima que atraviesa su mejilla nacen de una tristeza silenciosa, profunda, casi sagrada.\n\nEn mis obras los tonos suaves pasteles representan lo celestial, y la mayor intención de los colores es envolver el rostro de esos tonos como si fueran emociones que se disuelven en luz.\nMe gusta imaginar que tiene sonido... y suena como un suspiro sostenido demasiado tiempo.\n\nMás que pintar un ángel, intenté pintar el instante exacto en que el alma se quiebra en silencio.",
+    author: "Alisson Javier Torres Mendoza",
+    insta: "@alison_y_su_arte"
+  }
 ];
 
 let current = 0;
@@ -947,6 +983,12 @@ function updateModal(i){
   document.getElementById("modalAuthor").textContent = data[i].author;
   document.getElementById("modalInsta").textContent = data[i].insta;
 }
+
+// fallback por si el navegador no carga el archivo .jfif
+document.getElementById("modalImg").addEventListener('error', function(){
+  this.onerror = null;
+  this.src = './img/Cuadro 5.jpg';
+});
 
 function nextOleo(){
   current = (current + 1) % data.length;
@@ -1133,6 +1175,10 @@ modalImg.addEventListener("mouseleave", () => {
 
       <div class="card-pro" onclick="openViewer(4)">
         <img src="./img/Cuadro 5.jpg">
+      </div>
+
+      <div class="card-pro" onclick="openViewer(5)">
+        <img src="./img/Cuadro-4-técnica-acrílico.jpg" alt="ANDÍA - Dianis Isabel Angulo Pallares" onerror="this.onerror=null;this.src='./img/Cuadro 1.jpg'">
       </div>
 
     </div>
@@ -1439,6 +1485,14 @@ const obras = [
     desc: "Representa de donde vengo Guatapurí comunidad del resguardo indígena Kankuam",
     tecnica: "Acrílico sobre lienzo",
     ig: "@eldieguito.1"
+  },
+  {
+    img: "./img/Cuadro-4-técnica-acrílico.jpg",
+    titulo: "ANDÍA",
+    autor: "Dianis Isabel Angulo Pallares",
+    desc: "La obra fue ejecutada en acrílico sobre lienzo con una base previa de color café tostado, utilizada para potenciar el contraste y la profundidad de los pigmentos aplicados posteriormente. Se emplearon pinceles de distintos grosores para diferenciar las áreas de detalle, como el faro y las velas, de las zonas amplias como el mar y el cielo. El agua se utilizó como diluyente para trabajar transparencias y capas sin perder intensidad cromática.\n\nEl desarrollo de la pieza tomó aproximadamente un mes y se realizó en espacios tanto académicos como externos, lo que permitió revisitar la composición desde distintas perspectivas. La composición se centró en la representación de barcos vikingos dirigiéndose hacia un faro solitario, abordando el tema del acercamiento a una luz previamente inalcanzable.\n\nEl objetivo de la obra es transmitir la sensación de asombro y transformación ante la aparición de un nuevo horizonte afectivo.",
+    tecnica: "Acrílico sobre lienzo",
+    ig: "dianisisabel23"
   }
 ];
 
@@ -1509,6 +1563,21 @@ document.addEventListener("keydown", e=>{
 <div class="cinematic-container">
 <!-- TITULO -->
 <div class="cinematic-title reveal"><h2>Detrás de la <span>obra</span></h2><div class="line"></div></div>
+
+<!-- VIDEO DETRÁS DE LA OBRA -->
+<div style="margin: 24px 0 40px; padding: 30px 18px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(212,175,55,0.2);">
+  <div style="max-width: 900px; margin: 0 auto; position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 10px 40px rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.2);" class="video-shell">
+    <video id="videoDetrasObra" class="video-cinematic" playsinline preload="metadata" style="width: 100%; height: auto; display: block; cursor: pointer; border-radius: 16px; background: #020617;">
+      <source src="./img/Apartado-de-“detrás-de-la-obra”.mp4" type="video/mp4">
+      Tu navegador no soporta el elemento de video.
+    </video>
+    <button id="videoDetrasObraBtn" type="button" class="video-control-btn" aria-label="Reproducir video">
+      <span class="video-control-icon">▶</span>
+      <small>Reproducir</small>
+    </button>
+  </div>
+</div>
+
 <!-- FASES -->
 <div class="cinematic-grid">
 <div class="cinematic-card reveal" data-speed="0.2"><img src="./img/esquiina%201.jpg"><div class="overlay"><h3>Inicio</h3><p>Boceto a lápiz</p></div></div>
@@ -1574,6 +1643,69 @@ document.addEventListener("keydown", e=>{
 </div>
 <!-- AUDIO -->
 <audio id="audioCine"><source src="./img/audio.ogg" type="audio/mpeg"></audio>
+
+<!-- SEGUNDA OBRA: ANDÍA -->
+<div class="cinematic-text reveal" style="margin-top: 80px; padding-top: 60px; border-top: 2px solid #D4AF37;">
+
+<!-- VIDEO ANDÍA -->
+<div style="margin-bottom: 40px; padding: 40px 20px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(212,175,55,0.2);">
+  <h3 style="text-align: center; color: #D4AF37; font-size: 24px; margin-bottom: 18px; font-weight: 700;">Proceso de creación</h3>
+  <p style="text-align: center; color: #cbd5e1; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px; opacity: 0.9;">Explora el proceso visual con un control elegante</p>
+  <div style="max-width: 900px; margin: 0 auto; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 18px 45px rgba(30,41,59,0.45); border: 1px solid rgba(148,163,184,0.18);" class="video-shell-alt">
+    <video id="videoAndía" class="video-cinematic-alt" playsinline preload="metadata" style="width: 100%; height: auto; display: block; cursor: pointer; border-radius: 18px; background: linear-gradient(145deg, #020617, #111827);">
+      <source src="./img/Video-que-corresponde-al-cuadro-4.mp4" type="video/mp4">
+      Tu navegador no soporta el elemento de video.
+    </video>
+    <button id="videoAndiaBtn" type="button" class="video-control-btn video-control-btn-alt" aria-label="Reproducir video">
+      <span class="video-control-icon video-control-icon-alt">▶</span>
+      <span class="video-control-label">Reproducir</span>
+    </button>
+  </div>
+</div>
+
+  <h1 class="autor-titulo">
+    <span class="autor-label">Obra</span>
+    <span class="autor-nombre">ANDÍA</span>
+    <span class="autor-linea"></span>
+  </h1>
+
+<p>La obra fue ejecutada en acrílico sobre lienzo con una base previa de color café tostado, utilizada para potenciar el contraste y la profundidad de los pigmentos aplicados posteriormente. Se emplearon pinceles de distintos grosores para diferenciar las áreas de detalle, como el faro y las velas, de las zonas amplias como el mar y el cielo. El agua se utilizó como diluyente para trabajar transparencias y capas sin perder intensidad cromática.</p>
+
+<p>El desarrollo de la pieza tomó aproximadamente un mes y se realizó en espacios tanto académicos como externos, lo que permitió revisitar la composición desde distintas perspectivas. La composición se centró en la representación de barcos vikingos dirigiéndose hacia un faro solitario, abordando el tema del acercamiento a una luz previamente inalcanzable.</p>
+
+<p>El objetivo de la obra es transmitir la sensación de asombro y transformación ante la aparición de un nuevo horizonte afectivo.</p>
+
+<div class="controls">
+<button id="audioBtnDetras">▶ Escuchar historia</button>
+<button onclick="openViewer(5)" style="background: linear-gradient(90deg, #D4AF37, #3b82f6); border: 1px solid #D4AF37; padding: 10px 20px; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; transition: 0.3s;">Ver en galería →</button>
+</div>
+</div>
+
+<!-- AUDIO ANDÍA -->
+<audio id="audioDetras"><source src="./img/detras.ogg" type="audio/ogg"></audio>
+
+<script>
+// Control de audio ANDÍA
+const audioBtnDetras = document.getElementById("audioBtnDetras");
+const audioDetras = document.getElementById("audioDetras");
+
+if(audioBtnDetras && audioDetras){
+  audioBtnDetras.addEventListener("click", () => {
+    if(audioDetras.paused){
+      audioDetras.play();
+      audioBtnDetras.textContent = "⏸ Pausar";
+    } else {
+      audioDetras.pause();
+      audioBtnDetras.textContent = "▶ Escuchar historia";
+    }
+  });
+  
+  audioDetras.addEventListener("ended", () => {
+    audioBtnDetras.textContent = "▶ Escuchar historia";
+  });
+}
+</script>
+
 </section>
 
 <style>
@@ -1607,6 +1739,19 @@ document.addEventListener("keydown", e=>{
 .controls button{padding: 12px 24px;background: linear-gradient(90deg,#2E3F6E,#D4AF37);border: none;border-radius: 10px;color: white;cursor: pointer;transition: 0.3s;}
 .controls button:hover{transform: scale(1.1);}
 .controls a{padding: 12px 24px;border: 1px solid #D4AF37;border-radius: 10px;color: #D4AF37;text-decoration: none;}
+/* VIDEO DETRÁS DE LA OBRA */
+.video-shell::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,175,55,0.08),transparent 35%,rgba(56,189,248,0.08));pointer-events:none;}
+.video-control-btn{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(212,175,55,0.35);background:linear-gradient(135deg,rgba(2,6,23,0.72),rgba(30,41,59,0.65));backdrop-filter:blur(6px);color:#fff;cursor:pointer;transition:opacity .25s ease,transform .2s ease;z-index:2;}
+.video-control-btn:hover{transform:scale(1.03);} 
+.video-control-icon{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#D4AF37,#F5E8A3,#D4AF37);color:#07111f;font-size:28px;font-weight:800;box-shadow:0 12px 30px rgba(212,175,55,0.35);}
+.video-control-btn small{letter-spacing:2px;text-transform:uppercase;font-size:11px;color:#efe3b9;}
+
+/* VIDEO ANDÍA - diseño alternativo */
+.video-shell-alt::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(56,189,248,0.10),transparent 30%,rgba(212,175,55,0.10));pointer-events:none;z-index:1;}
+.video-control-btn-alt{background:linear-gradient(145deg,rgba(8,15,30,0.86),rgba(17,24,39,0.92));border:1px solid rgba(56,189,248,0.25);box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 20px 35px rgba(8,15,30,0.45);}
+.video-control-btn-alt:hover{transform:translateY(-2px) scale(1.02);} 
+.video-control-icon-alt{background:linear-gradient(135deg,#38bdf8,#0ea5e9,#D4AF37);color:#04111f;box-shadow:0 14px 30px rgba(56,189,248,0.28);}
+.video-control-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#e2e8f0;}
 /* REVEAL */
 .reveal.active{opacity: 1 !important;transform: translateY(0) !important;}
 /* MÓVIL */
@@ -1648,6 +1793,106 @@ btnCine.addEventListener("click", ()=>{
   if(audioCine.paused){ audioCine.play(); btnCine.textContent = "⏸ Pausar"; }
   else { audioCine.pause(); btnCine.textContent = "▶ Escuchar historia"; }
 });
+
+// VIDEO DETRÁS DE LA OBRA
+const videoDetrasObra = document.getElementById("videoDetrasObra");
+const videoDetrasObraBtn = document.getElementById("videoDetrasObraBtn");
+
+function actualizarBotonVideoDetras() {
+  if (!videoDetrasObra || !videoDetrasObraBtn) return;
+
+  const pausado = videoDetrasObra.paused || videoDetrasObra.ended;
+  videoDetrasObraBtn.style.opacity = pausado ? "1" : "0";
+  videoDetrasObraBtn.style.pointerEvents = pausado ? "auto" : "none";
+
+  const icono = videoDetrasObraBtn.querySelector(".video-control-icon");
+  const texto = videoDetrasObraBtn.querySelector("small");
+
+  if (pausado) {
+    icono.textContent = "▶";
+    texto.textContent = "Reproducir";
+  } else {
+    icono.textContent = "❚❚";
+    texto.textContent = "Pausar";
+  }
+}
+
+function alternarVideoDetras() {
+  if (!videoDetrasObra) return;
+
+  if (videoDetrasObra.paused) {
+    videoDetrasObra.play().catch(() => {});
+  } else {
+    videoDetrasObra.pause();
+  }
+
+  actualizarBotonVideoDetras();
+}
+
+if (videoDetrasObraBtn) {
+  videoDetrasObraBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    alternarVideoDetras();
+  });
+}
+
+if (videoDetrasObra) {
+  videoDetrasObra.addEventListener("click", alternarVideoDetras);
+  videoDetrasObra.addEventListener("play", actualizarBotonVideoDetras);
+  videoDetrasObra.addEventListener("pause", actualizarBotonVideoDetras);
+  videoDetrasObra.addEventListener("ended", actualizarBotonVideoDetras);
+  actualizarBotonVideoDetras();
+}
+
+// VIDEO ANDÍA (diseño alternativo)
+const videoAndia = document.getElementById("videoAndía");
+const videoAndiaBtn = document.getElementById("videoAndiaBtn");
+
+function actualizarBotonVideoAndia() {
+  if (!videoAndia || !videoAndiaBtn) return;
+
+  const pausado = videoAndia.paused || videoAndia.ended;
+  videoAndiaBtn.style.opacity = pausado ? "1" : "0";
+  videoAndiaBtn.style.pointerEvents = pausado ? "auto" : "none";
+
+  const icono = videoAndiaBtn.querySelector(".video-control-icon");
+  const etiqueta = videoAndiaBtn.querySelector(".video-control-label");
+
+  if (pausado) {
+    icono.textContent = "▶";
+    etiqueta.textContent = "Reproducir";
+  } else {
+    icono.textContent = "❚❚";
+    etiqueta.textContent = "Pausar";
+  }
+}
+
+function alternarVideoAndia() {
+  if (!videoAndia) return;
+
+  if (videoAndia.paused) {
+    videoAndia.play().catch(() => {});
+  } else {
+    videoAndia.pause();
+  }
+
+  actualizarBotonVideoAndia();
+}
+
+if (videoAndiaBtn) {
+  videoAndiaBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    alternarVideoAndia();
+  });
+}
+
+if (videoAndia) {
+  videoAndia.addEventListener("click", alternarVideoAndia);
+  videoAndia.addEventListener("play", actualizarBotonVideoAndia);
+  videoAndia.addEventListener("pause", actualizarBotonVideoAndia);
+  videoAndia.addEventListener("ended", actualizarBotonVideoAndia);
+  actualizarBotonVideoAndia();
+}
 </script>
 
 <section id="info" class="w-full py-32 px-6 text-white relative">
@@ -1767,7 +2012,7 @@ document.getElementById("whatsappForm").addEventListener("submit", function(e) {
 
   const numero = "573XXXXXXXXX"; // ← CAMBIA ESTO
 
-  const url = `https://wa.me/${numero}?text=${texto}`;
+  const url = `https://wa.me/${3015592352}?text=${hola-vengo-de-tu.paginaweb}`;
 
   window.open(url, "_blank");
 });
